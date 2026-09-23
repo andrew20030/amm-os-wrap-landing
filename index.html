@@ -1,8 +1,72 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"/><title>Abernathy OS</title></head><body style="margin:0;background:#0b1f3a;color:#f5f0e6;font-family:system-ui"><p style="padding:1rem">Loading Abernathy Operating System…</p><script>
-async function go(){
-  const base = location.href.replace(/[^/]*$/, '');
-  const parts = await Promise.all([1,2,3].map(i=>fetch(base+'part'+i+'.txt').then(r=>r.text())));
-  document.open(); document.write(parts.join('')); document.close();
-}
-go().catch(e=>{document.body.innerHTML='<pre style="padding:1rem;color:#e06060">'+e+'</pre>'});
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Abernathy OS · Wrap Landing</title>
+<meta name="description" content="Separate OS wrap — Ops Desk + Grok Dual Ops. Not the Vercel marketing page."/>
+<style>
+:root{--navy:#0b1f3a;--gold:#c9a227;--g2:#e0b83a;--cream:#f5f0e6;--mut:#9aa8bc}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:system-ui,sans-serif;background:#071428;color:var(--cream);min-height:100vh}
+a{color:var(--g2)}.top{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;justify-content:space-between;padding:.75rem 1rem;background:rgba(11,31,58,.95);border-bottom:1px solid rgba(201,162,39,.3);position:sticky;top:0;z-index:5}
+.badge{font-size:.65rem;padding:.2rem .5rem;border-radius:999px;background:rgba(201,162,39,.2);color:var(--g2)}
+nav button{border:0;border-radius:999px;padding:.45rem .8rem;margin:.15rem;cursor:pointer;background:rgba(255,255,255,.08);color:var(--cream);font:inherit;font-weight:700}
+nav button.on,.go{background:linear-gradient(135deg,var(--g2),var(--gold));color:var(--navy)}
+main{padding:1rem;max-width:1100px;margin:0 auto}.panel{display:none}.panel.on{display:block}
+.card{padding:1rem;margin:.6rem 0;border-radius:14px;background:rgba(19,42,74,.8);border:1px solid rgba(201,162,39,.25)}
+.muted{color:var(--mut);font-size:.9rem;line-height:1.45}
+.jobs button{display:block;width:100%;text-align:left;margin:.3rem 0;padding:.55rem;border-radius:10px;border:1px solid transparent;background:transparent;color:var(--cream);cursor:pointer;font:inherit}
+.jobs button.on{border-color:var(--gold);background:rgba(201,162,39,.12)}
+.frame{height:70vh;border-radius:14px;overflow:hidden;border:1px solid rgba(201,162,39,.35)}
+iframe{width:100%;height:100%;border:0;background:#000}
+.go{border:0;border-radius:999px;padding:.55rem 1rem;font-weight:800;cursor:pointer}
+</style></head><body>
+<header class="top">
+<div><b style="color:var(--g2)">Abernathy AI Marketing and Media</b> · Operating System<br/><span class="badge">NEW DEPLOY · separate from vercel.app</span></div>
+<nav id="nav">
+<button type="button" data-t="ov" class="on">Overview</button>
+<button type="button" data-t="ops">Ops Desk</button>
+<button type="button" data-t="grok">Grok App</button>
+<button type="button" data-t="gs">Getting Started</button>
+</nav>
+<button type="button" class="go" id="enter">Enter Ops Desk</button>
+</header>
+<main>
+<section class="panel on" id="p-ov">
+<div class="card"><span class="badge">Purchase path not live here</span>
+<h1 style="margin:.4rem 0">OS wrap: Ops Desk + your Grok Dual Ops app</h1>
+<p class="muted">Brand-new deploy. Sales page at abernathy-marketing-media.vercel.app is unchanged.</p>
+<p style="margin-top:.8rem"><button type="button" class="go" onclick="show('ops')">Enter Ops Desk</button>
+<a class="muted" style="margin-left:.6rem" href="https://abernathy-marketing-media.vercel.app" target="_blank" rel="noopener">Sales page (unchanged) ↗</a></p></div>
+<div class="card"><h3 style="color:var(--g2)">Checkout stub</h3><p class="muted">NOT LIVE — no charges.</p>
+<button type="button" class="go" disabled>Individual</button> <button type="button" class="go" disabled>Team</button></div>
+</section>
+<section class="panel" id="p-ops">
+<div class="card" style="display:grid;grid-template-columns:240px 1fr;gap:1rem">
+<div class="jobs" id="jobs"></div>
+<div><h2 id="jt">Job</h2><p class="muted" id="js"></p>
+<div id="st" class="muted" style="margin:.6rem 0"></div>
+<button type="button" class="go" id="launch" disabled>Launch first job</button>
+<p class="muted" id="lh" style="margin-top:.4rem;font-size:.8rem"></p></div>
+</div></section>
+<section class="panel" id="p-grok">
+<p class="muted" style="margin-bottom:.4rem">Live Astro Dual Ops (not edited). <a href="https://wolf-brush-fjord-xenon.grok.me" target="_blank" rel="noopener">Open ↗</a></p>
+<div class="frame"><iframe title="Grok Dual Ops" src="https://wolf-brush-fjord-xenon.grok.me" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"></iframe></div>
+</section>
+<section class="panel" id="p-gs">
+<div class="card"><h2>Buyer Gmail (demo)</h2>
+<p class="muted">Buyer Gmail ≠ operator. Mark connected to unlock Launch.</p>
+<button type="button" class="go" id="mg">Demo: Mark Gmail Connected</button>
+<p class="muted" id="gs" style="margin-top:.5rem"></p></div>
+</section>
+</main>
+<script>
+const S=[{id:1,n:'Summit Roofing',s:1},{id:2,n:'Pine Valley HVAC',s:2},{id:3,n:'Lakeview Dental',s:3},{id:4,n:'BrightPath Tutoring',s:4},{id:5,n:'Harbor Auto Detail',s:5},{id:6,n:'Cedar Grove Landscaping',s:6},{id:7,n:null,s:0},{id:8,n:null,s:0}];
+const W=['01 Outbound','02 Inbound','03 Chase','04 CRM+voice','05 Build','06 Job invoice'];
+let sel=1;
+function show(t){document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.id==='p-'+t));document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));location.hash=t;}
+function paint(){const j=document.getElementById('jobs');j.innerHTML=S.map(x=>`<button type="button" class="${sel===x.id?'on':''}" data-id="${x.id}"><small style="color:var(--g2)">${x.n?'stage 0'+x.s:'empty'}</small><br/>${x.n||'Empty slot'}</button>`).join('');j.querySelectorAll('button').forEach(b=>b.onclick=()=>{sel=+b.dataset.id;paint();});const x=S.find(i=>i.id===sel);document.getElementById('jt').textContent=x.n||('slot-0'+x.id+' empty');document.getElementById('js').textContent=x.n?'Demo pipeline lead':'Fill via lead source + drop-replace';document.getElementById('st').innerHTML=W.map((w,i)=>`<div style="padding:.35rem 0;border-bottom:1px solid rgba(255,255,255,.08);${x.n&&x.s===i+1?'color:var(--g2);font-weight:700':''}">${w}</div>`).join('');}
+function ref(){const ok=localStorage.getItem('amm-gmail-connected')==='true';document.getElementById('launch').disabled=!ok;document.getElementById('lh').textContent=ok?'Gmail connected (demo) — Launch unlocked.':'Connect Gmail on Getting Started to unlock Launch.';document.getElementById('gs').textContent=ok?'Status: connected (demo flag).':'Status: not connected.';}
+document.getElementById('nav').onclick=e=>{const b=e.target.closest('button[data-t]');if(b)show(b.dataset.t)};document.getElementById('enter').onclick=()=>show('ops');
+document.getElementById('mg').onclick=()=>{localStorage.setItem('amm-gmail-connected','true');ref();};
+document.getElementById('launch').onclick=()=>alert('Launch queued (demo). Operator desk stays open.');
+(function(){const h=(location.hash||'#ov').slice(1);show(['ov','ops','grok','gs'].includes(h)?h:'ov');paint();ref();})();
 </script></body></html>
