@@ -1,0 +1,8 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>Abernathy OS</title></head><body style="margin:0;background:#0b1f3a;color:#f5f0e6;font-family:system-ui"><p style="padding:1rem">Loading Abernathy Operating System…</p><script>
+async function go(){
+  const base = location.href.replace(/[^/]*$/, '');
+  const parts = await Promise.all([1,2,3].map(i=>fetch(base+'part'+i+'.txt').then(r=>r.text())));
+  document.open(); document.write(parts.join('')); document.close();
+}
+go().catch(e=>{document.body.innerHTML='<pre style="padding:1rem;color:#e06060">'+e+'</pre>'});
+</script></body></html>
